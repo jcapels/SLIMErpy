@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % model = addLipidSpecies(model,metName,metFormula,exchange)
 %
-% Benjamín J. Sánchez. Last update: 2018-03-24
+% Benjamï¿½n J. Sï¿½nchez. Last update: 2018-03-24
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function model = addLipidSpecies(model,metName,metFormula,exchange)
@@ -16,7 +16,7 @@ model    = addMetabolite(model,metID, ...
                          'metFormula',metFormula);
 
 %Add exchange rxn if indicated:
-if exchange
+if exchange #reaÃ§Ãµes que permitem tirar os metabolitos do sistema
     newID   = getNewIndex(model.rxns);
     metName = metName(1:strfind(metName,'[')-2);
     rxnName = [metName ' exchange'];

@@ -22,8 +22,8 @@ def write_mat_model(model: cobra.Model, file_path: str):
     """
 
     cobra.io.save_matlab_model(model, file_name=file_path)
-
-
+    
+    
 def read_sbml_model(file_path: str) -> cobra.Model:
     """
 

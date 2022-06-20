@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % backName = getBackboneName(specName)
 %
-% Benjam�n J. S�nchez. Last update: 2018-03-24
+% Benjam�n J. S�nchez. Last update: 2018-03-24
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function backName = getBackboneName(specName)
@@ -11,6 +11,8 @@ compName = specName(strfind(specName,'[')+1:strfind(specName,']')-1);
 specName = specName(1:strfind(specName,'[')-2);
 
 %Group 1: keep generic name
+# do lado esquerdo temos a chave e do lado direito temos o valor para a chave do dicionário
+# group1 = é um dicionário
 group1 = {'1-phosphatidyl-1D-myo-inositol'                      'cytoplasm'
           'sn-2-acyl-1-lysophosphatidylinositol'                'endoplasmic reticulum membrane'
           'phosphatidyl-L-serine'                               'endoplasmic reticulum membrane'
@@ -25,6 +27,8 @@ group1 = {'1-phosphatidyl-1D-myo-inositol'                      'cytoplasm'
           'inositol-P-ceramide'                                 'Golgi'
           'inositol phosphomannosylinositol phosphoceramide'    'Golgi'
           'mannosylinositol phosphorylceramide'                 'Golgi'};
+
+# as funções seguintes iteram sobre o grupo (sobre as chaves do dicionário)
 for i = 1:length(group1)
     if startsWith(specName,group1{i,1}) && ~strcmp(specName,group1{i,1}) && ...
                   strcmp(compName,group1{i,2}) && ~contains(specName,'phosphate')
