@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % model = SLIMEr(model,data,includeTails)
 %
-% Benjam�n J. S�nchez. Last update: 2018-05-20
+% Benjam�n J. S�nchez. Last update: 2018-05-20
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function model = SLIMEr(model,data,includeTails)
@@ -21,17 +21,17 @@ for i = 1:length(metIDs)
         end
         %Add transport rxn to cytoplasm for non cytoplasmic backbones:
         if ~contains(backName,'cytoplasm')
-            cytoName = [backName(1:strfind(backName,'[')) 'cytoplasm]'];
-            if ismember(cytoName,model.metNames)
-                model.metFormulas{strcmp(model.metNames,cytoName)} = '';
+            cytoName = [backName(1:strfind(backName,'[')) 'cytoplasm]']; #vai buscar o nome do backbone, tira o mone do compartimento e adivionda ao nome do backbone a string [cytoplasm
+            if ismember(cytoName,model.metNames) #verifica se o cytoName está na lista de metabolites names
+                model.metFormulas{strcmp(model.metNames,cytoName)} = ''; # caso esteja, altera a formula desse metabolito
             else
-                model = addLipidSpecies(model,cytoName,'',false);
+                model = addLipidSpecies(model,cytoName,'',false); #caso contrário, chama a outra função que já fiz (addLipidSpecies) com o novo nome
             end
-            backID    = model.mets(strcmp(model.metNames,backName));
-            cytoID    = model.mets(strcmp(model.metNames,cytoName));
-            transID   = ['r_' getNewIndex(model.rxns)];
-            transName = [backName(1:strfind(backName,'[')-1) 'transport'];
-            model     = addReaction(model,transID, ...
+            backID    = model.mets(strcmp(model.metNames,backName)); #vai buscar o id do metabolito que identifiquei
+            cytoID    = model.mets(strcmp(model.metNames,cytoName)); #vai buscar o id do metabolito que fui buscar à linha 28
+            transID   = ['r_' getNewIndex(model.rxns)]; # adicionar um id para a reação de transporte
+            transName = [backName(1:strfind(backName,'[')-1) 'transport']; #cria o nome da nova reação transporte
+            model     = addReaction(model,transID, ... #adiciona a reação, em que
                                     'reactionName', transName, ...
                                     'metaboliteList', [backID,cytoID], ...
                                     'stoichCoeffList', [-1,+1], ...
@@ -51,23 +51,24 @@ for i = 1:length(data.lipidData.metNames)
     metIDs{i} = model.mets{strcmp(model.metNames,metName)};
 end
 data.lipidData.metIDs = metIDs;
-
+-----------------
 %Add chains:
 for i = 1:length(data.chainData.metNames)
     metName = [data.chainData.metNames{i} ' [cytoplasm]'];
     model   = addLipidSpecies(model,metName,data.chainData.formulas{i},~includeTails);
 end
-
+-----------------
 %Create lipid pseudo-rxn for backbones:
 model = addLipidSpecies(model,'lipid - backbones [cytoplasm]','',includeTails);
-model = changeLipidComp(model,data.lipidData);
 
+model = changeLipidComp(model,data.lipidData);
+--------------- #para baixo
 %Create lipid pseudo-rxn for tails:
 if includeTails
     model = addLipidSpecies(model,'lipid - tails [cytoplasm]','',includeTails);
     model = changeChainComp(model,data.chainData);
 end
-
+---------------
 %Add SLIME reactions replacing existing ISA rxns:
 rxnIDs   = model.rxns;
 rxnNames = model.rxnNames;
