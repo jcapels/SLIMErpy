@@ -1,6 +1,8 @@
 import re
 
 import cobra
+from cobra import Metabolite
+
 
 
 class SLIMEReactionsGenerator:
@@ -58,6 +60,9 @@ class SLIMEReactionsGenerator:
                 model_backbone_name = group2[fatty_acid_name][0] + " " + compartment_name
 
         return model_backbone_name
+
+    def get_new_index(self, identifier):
+        new_identifier = re.sub('[^(\d*)]','', identifier)
 
     def add_lipid_species(self, backbone_name, formula, exchange):
         """
