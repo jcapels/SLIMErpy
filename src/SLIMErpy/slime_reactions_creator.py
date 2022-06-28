@@ -247,8 +247,11 @@ class SLIMEReactionsGenerator:
         pseudo_reaction_tails.add_metabolites(metabolites_for_reaction)
 
 
+lipid_id = 's_1096[c]'
 
-
+reaction_name = 'lipid pseudoreaction - merge'
+add_reaction = Reaction(add_reaction, 'r_2108',
+                        'reactionName', reaction_name,
 
 
 class Table:  # fulldata2009
